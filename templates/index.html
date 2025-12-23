@@ -1,34 +1,39 @@
 {% extends "base.html" %}
 
 {% block head %}
-    <title>WELCOME HOME</title>
+<title>WELCOME HOME</title>
 {% endblock %}
 
 {% block body %}
 <div class="content"></div>
-    <h1 align="center">Hello, Suzie it's me beth!</h1>
-    <table border="1" borderstyle="solid" cellpadding="10" cellspacing="0">
-        <tr>
-            <th width="60%">Task</th>
-            <th width="20%">Added</th>
-            <th width="20%">Action</th>
-        </tr>
-        {% for task in tasks %}
-        <tr>
-            <td style="text-align: left;">{{ task.content }}</td>
-            <td style="text-align: center;">{{ task.date_created.date() }}</td>
-            <td style="text-align: center;">
-                <a href="">Delete</a>
-                <br>
-                <a href="">Update</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-
-    <form action="" method="POST" align="center" style="margin-top:20px;">
-        <input type="text" name="content" placeholder="Enter come content" id="content">
+<h1 style="text-align: center;">Hello, Suzie it's me beth!</h1>
+{% if tasks|length == 0 %}
+    <h3 style="text-align: center;">No tasks added yet. Add a task below!</h3>
+{% else %}
+<table style="border: 1px;" borderstyle="solid" cellpadding="10" cellspacing="0">
+    <tr>
+        <th width="60%">Task</th>
+        <th width="20%">Added</th>
+        <th width="20%">Action</th>
+    </tr>
+    {% for task in tasks %}
+    <tr>
+        <td style="text-align: left;">{{ task.content }}</td>
+        <td style="text-align: center;">{{ task.date_created.date() }}</td>
+        <td style="text-align: center;">
+            <a href="/delete/{{ task.id }}">Delete</a>
+            <br>
+            <a href="/update/{{ task.id }}">Update</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+<div class="form">
+    <form action="/" method="POST" style="text-align: center; margin-top:20px;">
+        <input type="text" name="content" placeholder="Enter some content" id="content">
         <input type="submit" value="Add Task">
     </form>
+</div>
 </div>
 {% endblock %}
